@@ -31,10 +31,8 @@ export async function GET(request: Request) {
     console.log('Existing chat:', chat ? 'Found' : 'Not found');
 
     if (!chat) {
-      console.error('Chat not found:', chatId);
-      return NextResponse.json({ 
-        error: 'Chat not found' 
-      }, { status: 404 });
+      console.log('Chat not found, returning empty votes array');
+      return NextResponse.json([], { status: 200 });
     }
 
     if (chat.userId !== session.user.id) {
