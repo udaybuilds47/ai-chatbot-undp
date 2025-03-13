@@ -40,6 +40,15 @@ export async function POST(request: Request) {
       selectedChatModel: string;
     } = await request.json();
 
+    console.log('Selected model:', selectedChatModel);
+
+    if (selectedChatModel !== 'perplexity-deep-research') {
+      console.error('Invalid model selected:', selectedChatModel);
+      return NextResponse.json({ 
+        error: 'Invalid model selected. Expected: perplexity-deep-research' 
+      }, { status: 400 });
+    }
+
     const session = await auth();
 
     if (!session || !session.user || !session.user.id) {
