@@ -76,7 +76,7 @@ export function Chat({
   });
 
   const { data: votes } = useSWR<Array<Vote>>(
-    `/api/vote?chatId=${id}`,
+    messages.length > 0 ? `/api/vote?chatId=${id}` : null,
     fetcher,
     {
       onError: (error) => {
