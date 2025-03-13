@@ -41,22 +41,48 @@ export function Chat({
     reload,
   } = useChat({
     id,
-    body: { id, selectedChatModel: selectedChatModel },
+    body: { 
+      id, 
+      selectedChatModel: selectedChatModel,
+      // Log the request body for debugging
+      _debug: {
+        timestamp: new Date().toISOString(),
+        model: selectedChatModel,
+      }
+    },
     initialMessages,
     experimental_throttle: 100,
     sendExtraMessageFields: true,
     generateId: generateUUID,
     onFinish: () => {
+      console.log('Chat finished successfully');
       mutate('/api/history');
     },
-    onError: () => {
-      toast.error('An error occured, please try again!');
+    onError: (error) => {
+      console.error('Chat error:', error);
+      // Log the error details
+      if (error instanceof Error) {
+        console.error('Error details:', {
+          message: error.message,
+          stack: error.stack,
+          name: error.name
+        });
+      }
+      toast.error('An error occurred while processing your request. Please try again.');
     },
+    onResponse: (response) => {
+      console.log('Received response:', response);
+    }
   });
 
   const { data: votes } = useSWR<Array<Vote>>(
     `/api/vote?chatId=${id}`,
     fetcher,
+    {
+      onError: (error) => {
+        console.error('Error fetching votes:', error);
+      }
+    }
   );
 
   const [attachments, setAttachments] = useState<Array<Attachment>>([]);
