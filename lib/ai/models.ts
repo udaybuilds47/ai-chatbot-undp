@@ -9,7 +9,7 @@ interface ChatModel {
 export const chatModels: Array<ChatModel> = [
   {
     id: 'perplexity-deep-research',
-    name: 'Perplexity Deep Research',
+    name: 'Perplexity Sonar Deep Research',
     description: 'Advanced model with real-time research capabilities',
   }
 ];

@@ -13,8 +13,8 @@ export const myProvider = isTestEnvironment
     })
   : customProvider({
       languageModels: {
-        'perplexity-deep-research': perplexity('pplx-70b-online'),
-        'title-model': perplexity('pplx-70b-online'),
-        'artifact-model': perplexity('pplx-70b-online'),
+        'perplexity-deep-research': perplexity('sonar-deep-research'),
+        'title-model': perplexity('sonar-deep-research'),
+        'artifact-model': perplexity('sonar-deep-research'),
       },
     });
