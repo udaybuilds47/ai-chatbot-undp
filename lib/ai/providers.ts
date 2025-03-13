@@ -1,11 +1,7 @@
 import { customProvider } from 'ai';
-import { PerplexityAI } from '@perplexity/sdk';
+import { perplexity } from '@ai-sdk/perplexity';
 import { isTestEnvironment } from '../constants';
 import { chatModel, titleModel, artifactModel } from './models.test';
-
-const perplexity = new PerplexityAI({
-  apiKey: process.env.PERPLEXITY_API_KEY || '',
-});
 
 export const myProvider = isTestEnvironment
   ? customProvider({
@@ -17,8 +13,8 @@ export const myProvider = isTestEnvironment
     })
   : customProvider({
       languageModels: {
-        'perplexity-deep-research': perplexity.model('pplx-70b-online'),
-        'title-model': perplexity.model('pplx-70b-online'),
-        'artifact-model': perplexity.model('pplx-70b-online'),
+        'perplexity-deep-research': perplexity('pplx-70b-online'),
+        'title-model': perplexity('pplx-70b-online'),
+        'artifact-model': perplexity('pplx-70b-online'),
       },
     });
