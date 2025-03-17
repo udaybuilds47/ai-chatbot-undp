@@ -122,15 +122,18 @@ export async function POST(request: Request) {
         console.log('Starting chat stream');
         const result = streamText({
           model: myProvider.languageModel(selectedChatModel),
-          system: systemPrompt(),
+          system: systemPrompt({ selectedChatModel }),
           messages,
           maxSteps: 5,
-          experimental_activeTools: [
-            'getWeather',
-            'createDocument',
-            'updateDocument',
-            'requestSuggestions',
-          ],
+          experimental_activeTools:
+            selectedChatModel === 'perplexity-deep-research'
+              ? []
+              : [
+                  'getWeather',
+                  'createDocument',
+                  'updateDocument',
+                  'requestSuggestions',
+                ],
           experimental_transform: smoothStream({ chunking: 'word' }),
           experimental_generateMessageId: generateUUID,
           tools: {
